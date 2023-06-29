@@ -54,19 +54,13 @@ void *pongo_usb_callback(stuff_t *arg) {
 	if (ramdisk_dmg_len != 0)
 #endif
 	{
-		strncat(xargs_cmd, " rootdev=md0", 0x270 - strlen(xargs_cmd) - 1);
+		strncat(xargs_cmd, " rd=md0 debug=0x2014e -v wdt=-1", 0x270 - strlen(xargs_cmd) - 1);
 		upload_pongo_file(handle, **ramdisk_to_upload, ramdisk_dmg_len);
 		issue_pongo_command(handle, "ramdisk");
 	}
-#ifdef NO_OVERLAY
-	if (binpack_dmg_len != 0)
-#endif
-	{
-		upload_pongo_file(handle, **overlay_to_upload, binpack_dmg_len);
-		issue_pongo_command(handle, "overlay");
-	}
 	issue_pongo_command(handle, xargs_cmd);
 	if (checkrain_options_enabled(host_flags, host_option_pongo_full)) goto done;
+	issue_pongo_command(handle, "xfb");
 	issue_pongo_command(handle, "bootx");
 	LOG(LOG_INFO, "Booting Kernel...");
 	if (checkrain_options_enabled(palerain_flags, palerain_option_setup_partial_root)) {
