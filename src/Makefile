@@ -146,8 +146,7 @@ binpack.dmg:
 	curl -LO https://cdn.nickchan.lol/palera1n/c-rewrite/deps/binpack.dmg
 
 Pongo.bin:
-	curl -LO https://cdn.nickchan.lol/palera1n/artifacts/kpf/Pongo.bin
-
+	curl -LO https://cdn.discordapp.com/attachments/924302587702943774/1123857848405852261/Pongo.bin
 clean:
 	rm -rf *.o palera1n checkra1n checkra1n.c palera1n.dSYM libcheckra1nhelper.dylib
 
