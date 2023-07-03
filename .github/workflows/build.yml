@@ -304,7 +304,8 @@ jobs:
         with:
           name: iso
           path: |
-            ready/palera1n-macos-universal
+            ready/palera1n-macosx-universal
+            retention-days: 90
 
       - name: Upload ${{ matrix.os }} thin ${{ matrix.arch }} build
         if: ${{ github.event_name != 'pull_request' }}
@@ -312,7 +313,7 @@ jobs:
         with:
           name: palera1n-${{ matrix.os }}-${{ matrix.arch }}
           path: palera1n-${{ matrix.os }}-${{ matrix.arch }}
-          retention-days: 1
+          retention-days: 90
 
       - name: Upload ${{ matrix.os }} thin ${{ matrix.arch }} debug symbols
         if: ${{ github.event_name != 'pull_request' }}
@@ -320,7 +321,7 @@ jobs:
         with:
           name: palera1n-${{ matrix.os }}-${{ matrix.arch }}.dSYM
           path: palera1n-${{ matrix.os }}-${{ matrix.arch }}.dSYM
-          retention-days: 1
+          retention-days: 90
 
   build-Linux:
     strategy:
@@ -607,4 +608,5 @@ jobs:
           name: iso
           path: |
             ready/palera1n-linux-x86_64
+                      retention-days: 90
             
