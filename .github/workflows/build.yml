@@ -322,68 +322,7 @@ jobs:
           name: palera1n-${{ matrix.os }}-${{ matrix.arch }}.dSYM
           path: palera1n-${{ matrix.os }}-${{ matrix.arch }}.dSYM
           retention-days: 1
-      
-  darwin-dist:
-    if: ${{ github.event_name != 'pull_request' }}
-    runs-on: macos-latest
-    needs: build-darwin
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Setup Procursus
-        uses: beerpiss/procursus-action@v2.0.2
-        with:
-          packages: sed coreutils
-          cache: true
-          mirror: 'https://procursus.itsnebula.net/'
-
-      - name: Download all Darwin artifacts
-        uses: actions/download-artifact@v3
-
-      - name: Prepare artifact
-        run: |
-          find .
-          lipo -create -arch arm64 ./palera1n-macosx-arm64/palera1n-macosx-arm64 -arch x86_64 ./palera1n-macosx-x86_64/palera1n-macosx-x86_64 -output palera1n-macos
-          mkdir -p palera1n-macos.dSYM/Contents/Resources/DWARF
-          cp ./palera1n-macosx-x86_64.dSYM/Contents/Info.plist palera1n-macos.dSYM/Contents
-          lipo -create -arch arm64 palera1n-macosx-arm64.dSYM/Contents/Resources/DWARF/palera1n-macosx-arm64 -arch x86_64 palera1n-macosx-x86_64.dSYM/Contents/Resources/DWARF/palera1n-macosx-x86_64 -output palera1n-macos.dSYM/Contents/Resources/DWARF/palera1n-macos
-          mkdir ready
-          cp palera1n-macos ready/palera1n-macos-universal
-          cp ./palera1n-macosx-x86_64/palera1n-macosx-x86_64 ready/palera1n-macos-x86_64
-          cp ./palera1n-macosx-arm64/palera1n-macosx-arm64 ready/palera1n-macos-arm64
-          cp ./palera1n-iphoneos-arm64/palera1n-iphoneos-arm64 ready/palera1n-ios
-          zip -r9 ready/palera1n-ios.dSYM.zip palera1n-iphoneos-arm64.dSYM
-          zip -r9 ready/palera1n-macos.dSYM.zip palera1n-macos.dSYM
-      
-      - name: Save build tag
-        run: echo "$(git describe --dirty --tags --abbrev=7 | sed 's|-dirty||')" > build-tag.txt
-      
-      - name: Upload build tag
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-tag
-          path: build-tag.txt
-
-      - name: Get branch name
-        id: branch-name
-        uses: tj-actions/branch-names@v7
-
-      - name: Upload artifact
-        if: ${{ github.event_name != 'pull_request' }}
-        uses: wangyucode/sftp-upload-action@v1.4.8
-        with:
-          host: ${{ secrets.NICKCHAN_FTP_HOST }}
-          port: ${{ secrets.NICKCHAN_FTP_PORT }}
-          username: palera1n
-          privateKey: ${{ secrets.NICKCHAN_FTP_KEY }}
-          forceUpload: true
-          dryRun: false
-          localDir: 'ready/'
-          remoteDir: "/palera1n/artifacts/c-rewrite/${{ steps.branch-name.outputs.ref_branch || github.ref }}/${{ github.run_number }}"
-
+          
   build-Linux:
     strategy:
       matrix:
