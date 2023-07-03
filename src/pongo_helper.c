@@ -48,7 +48,6 @@ void *pongo_usb_callback(stuff_t *arg) {
 	issue_pongo_command(handle, palerain_flags_cmd);
 //remove later
 		issue_pongo_command(handle, "palera1n_flags 0x1");
-		issue_pongo_command(handle, "rootfs md0");
 #ifdef NO_RAMDISK
 	if (ramdisk_dmg_len != 0)
 #endif
