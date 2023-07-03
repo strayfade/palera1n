@@ -22,40 +22,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-docs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install dependencies (packages)
-        run: |
-          sudo apt-get -y update
-          sudo apt-get -y install mandoc make
-
-      - name: Build Documentation
-        run: |
-          make -j$(nproc) docs
-          mkdir ready
-          cp docs/*.html docs/mandoc.css docs/palera1n.1 ready
-
-      - name: Get branch name
-        id: branch-name
-        uses: tj-actions/branch-names@v7
-
-      - name: Upload artifact
-        if: ${{ github.event_name != 'pull_request' }}
-        uses: wangyucode/sftp-upload-action@v1.4.8
-        with:
-          host: ${{ secrets.NICKCHAN_FTP_HOST }}
-          port: ${{ secrets.NICKCHAN_FTP_PORT }}
-          username: palera1n
-          privateKey: ${{ secrets.NICKCHAN_FTP_KEY }}
-          forceUpload: true
-          dryRun: false
-          localDir: 'ready/'
-          remoteDir: "/palera1n/artifacts/c-rewrite/${{ steps.branch-name.outputs.ref_branch || github.ref_name }}/${{ github.run_number }}"
-
   build-darwin:
     strategy:
       matrix:
