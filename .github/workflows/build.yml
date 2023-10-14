@@ -614,7 +614,7 @@ jobs:
   finish-build:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'pull_request' }}
-    needs: [build-docs, build-darwin, darwin-dist, build-Linux]
+    needs: [build-darwin, build-Linux]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
