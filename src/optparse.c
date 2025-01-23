@@ -13,6 +13,7 @@
 #include <errno.h>
 #include <palerain.h>
 #include <sys/mman.h>
+#include <sys/stat.h>
 
 checkrain_option_t host_flags = 0;
 checkrain_option_p host_flags_p = &host_flags;
