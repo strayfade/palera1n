@@ -40,7 +40,7 @@ jobs:
             gnu_triple: aarch64-apple-darwin
             os: iphoneos
             minos: 7.0
-    runs-on: macos-12
+    runs-on: macos-13
     env:
       MBEDTLS_VERSION: 3.4.0
       READLINE_VERSION: 8.2
@@ -302,7 +302,7 @@ jobs:
         uses: tj-actions/branch-names@v7
 
       - name: Upload Latest Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: iso
           path: |
@@ -311,7 +311,7 @@ jobs:
 
       - name: Upload ${{ matrix.os }} thin ${{ matrix.arch }} build
         if: ${{ github.event_name != 'pull_request' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: palera1n-${{ matrix.os }}-${{ matrix.arch }}
           path: palera1n-${{ matrix.os }}-${{ matrix.arch }}
@@ -319,7 +319,7 @@ jobs:
 
       - name: Upload ${{ matrix.os }} thin ${{ matrix.arch }} debug symbols
         if: ${{ github.event_name != 'pull_request' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: palera1n-${{ matrix.os }}-${{ matrix.arch }}.dSYM
           path: palera1n-${{ matrix.os }}-${{ matrix.arch }}.dSYM
@@ -605,7 +605,7 @@ jobs:
         uses: tj-actions/branch-names@v7
 
       - name: Upload Latest Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: iso
           path: |
