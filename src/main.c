@@ -109,8 +109,8 @@ int palera1n(int argc, char *argv[]) {
 	pthread_mutex_init(&spin_mutex, NULL);
 	pthread_mutex_init(&found_pongo_mutex, NULL);
 	pthread_mutex_init(&ecid_dfu_wait_mutex, NULL);
-	if ((ret = build_checks())) return ret;
 	if ((ret = optparse(argc, argv))) goto cleanup;
+	if ((ret = build_checks())) return ret;
 	if (!checkrain_options_enabled(host_flags, host_option_device_info) && checkrain_options_enabled(host_flags, host_option_palerain_version)) goto normal_exit;
 #ifdef TUI
 	if (checkrain_options_enabled(host_flags, host_option_tui)) {
